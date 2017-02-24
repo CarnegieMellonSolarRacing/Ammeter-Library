@@ -1,4 +1,5 @@
-#include "ammeter.h"
+#include <Ammeter.h>
+
 Ammeter ammeter(1);
 
 void setup()

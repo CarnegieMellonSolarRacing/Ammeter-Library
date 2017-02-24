@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "ammeter.h"
+#include "Ammeter.h"
 
 Ammeter::Ammeter(int pin)
 {
@@ -9,16 +9,16 @@ Ammeter::Ammeter(int pin)
   _b = 0.0f;
 }
 
-Ammeter::read_raw() {
+float Ammeter::read_raw() {
   float raw = analogRead(_pin);
   return raw;
 }
 
-Ammeter::get_amps() {
+float Ammeter::get_amps() {
   return (read_raw() - _baseline)*_m + _b;
 }
 
-Ammeter::zero() {
+void Ammeter::zero() {
   _baseline = read_raw();
 }
 
