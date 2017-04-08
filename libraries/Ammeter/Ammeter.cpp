@@ -1,11 +1,11 @@
 #include "Arduino.h"
 #include "Ammeter.h"
 
-Ammeter::Ammeter(int pin)
+Ammeter::Ammeter(int pin, float scale)
 {
   pinMode(pin, INPUT);
   _pin = pin;
-  _m = 1.0f;
+  _m = 1 / scale;
   _b = 0.0f;
 }
 

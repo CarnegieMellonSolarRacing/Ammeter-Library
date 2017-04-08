@@ -1,17 +1,21 @@
 #include <Ammeter.h>
 
-Ammeter ammeter(1);
+Ammeter ammeterA(1, 2.928f);
+Ammeter ammeterB(0, 4.28f);
 
 void setup()
 {
   Serial.begin(9600);
   Serial.println("Setting Up");
-  ammeter.zero();
+  ammeterA.zero();
+  ammeterB.zero();
 }
 
 void loop()
 {
-  float amps = ammeter.get_amps();
-  Serial.print(amps); Serial.println(" amps");
+  float ampsA = ammeterA.get_amps();
+  float ampsB = ammeterB.get_amps();
+  Serial.print(ammeterB.read_raw()); Serial.println(" raw");
+  //Serial.print(ampsA); Serial.print(" "); Serial.print(ampsB); Serial.println(" amps");
   delay(500);
 }
