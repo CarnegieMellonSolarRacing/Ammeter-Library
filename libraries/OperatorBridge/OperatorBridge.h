@@ -7,6 +7,7 @@
 
 const int NUM_CURRENT_SENSORS = 3;
 const int NUM_TEMP_SENSORS = 2;
+const int NUM_LIGHT_SENSORS = 1;
 
 class OperatorBridge {
 public:
@@ -14,6 +15,7 @@ public:
     public:
         float current[NUM_CURRENT_SENSORS];
         float temp[NUM_TEMP_SENSORS];
+        float light[NUM_LIGHT_SENSORS];
     };
 
     class PacketIn {
