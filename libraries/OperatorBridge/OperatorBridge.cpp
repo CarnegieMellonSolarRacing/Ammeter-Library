@@ -39,9 +39,9 @@ bool OperatorBridge::send(OperatorBridge::PacketOut packet) {
   for (int i = 0; i < NUM_TEMP_SENSORS; i++) {
     temp_data.add(double_with_n_digits(packet.temp[i], 6));
   }
-  JsonArray& light_data = root.createNestedArray("lights");
-  for (int i = 0; i < NUM_LIGHT_SENSORS; i++) {
-    light_data.add(double_with_n_digits(packet.light[i], 6));
+  JsonArray& volt_data = root.createNestedArray("volts");
+  for (int i = 0; i < NUM_VOLTAGE_SENSORS; i++) {
+    volt_data.add(double_with_n_digits(packet.volt[i], 6));
   }
   root.printTo(Serial);
   Serial.println();

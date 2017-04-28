@@ -3,17 +3,21 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <LightSensor.h>
+#include <VoltageSensor.h>
 
 #include "PinMap.h"
 
 /* Declare Sensors Here */
 Ammeter ammeterA(AMMETER_A_PIN, 2.928f);
 Ammeter ammeterB(AMMETER_B_PIN, 4.28f);
+Ammeter ammeterC(AMMETER_C_PIN, 4.726f);
 
 OneWire tempAOneWire(TEMPERATURE_A_PIN);
 DallasTemperature tempASensor(&tempAOneWire);
+OneWire tempBOneWire(TEMPERATURE_B_PIN);
+DallasTemperature tempBSensor(&tempBOneWire);
 
-LightSensor lightASensor(LIGHT_A_PIN);
+VoltageSensor voltageASensor(VOLTAGE_A_PIN);
 
 /* Bridge to Tablet */
 OperatorBridge *bridge;
@@ -25,6 +29,7 @@ void setup()
   bridge = new OperatorBridge();
   ammeterA.zero();
   ammeterB.zero();
+  ammeterC.zero();
 }
 
 void sendPacket()
@@ -35,21 +40,27 @@ void loop()
 {
   /* Prepare for sensor measurement */
   tempASensor.requestTemperatures();
+  tempBSensor.requestTemperatures();
 
   /* Collect Measurements */
-  float ampsA = ammeterA.get_amps();
-  float ampsB = ammeterB.get_amps();
+  float ampsA = ammeterA.read_raw();
+  float ampsB = ammeterB.read_raw();
+  float ampsC = ammeterC.read_raw();
 
   float tempA = tempASensor.getTempCByIndex(0);
-  float lightA = lightASensor.read_lux();
+  float tempB = tempBSensor.getTempCByIndex(0);
+
+  float voltA = voltageASensor.read_raw();
   
   out.current[0] = ampsA;
   out.current[1] = ampsB;
-  out.current[2] = ampsA;
+  out.current[2] = ampsC;
   out.temp[0] = tempA;
-  out.temp[1] = tempA;
-  out.light[0] = lightA;
-  
+  out.temp[1] = tempB;
+  out.volt[0] = voltA;
+  out.volt[1] = voltA;
+  out.volt[2] = voltA;
+
   bridge->send(out);
 
   in = bridge->read();
@@ -59,5 +70,5 @@ void loop()
   } else {
     // Serial.println("Recieved Null Pointer");
   }
-  delay(1000);
+  delay(200);
 }

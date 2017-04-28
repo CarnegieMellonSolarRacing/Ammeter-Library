@@ -2,10 +2,12 @@
 #define PIN_MAP_H
 
 /* Analog Pins */
-static int AMMETER_A_PIN = 1;
-static int AMMETER_B_PIN = 0;
-static int LIGHT_A_PIN = 3;
+static int AMMETER_A_PIN = 0;
+static int AMMETER_B_PIN = 1;
+static int AMMETER_C_PIN = 2;
+static int VOLTAGE_A_PIN = 3;
 
 /* Digital Pins */
 static int TEMPERATURE_A_PIN = 2;
+static int TEMPERATURE_B_PIN = 3;
 #endif
