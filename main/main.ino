@@ -18,6 +18,8 @@ OneWire tempBOneWire(TEMPERATURE_B_PIN);
 DallasTemperature tempBSensor(&tempBOneWire);
 
 VoltageSensor voltageASensor(VOLTAGE_A_PIN);
+VoltageSensor voltageBSensor(VOLTAGE_B_PIN);
+VoltageSensor voltageCSensor(VOLTAGE_C_PIN);
 
 /* Bridge to Tablet */
 OperatorBridge *bridge;
@@ -51,15 +53,17 @@ void loop()
   float tempB = tempBSensor.getTempCByIndex(0);
 
   float voltA = voltageASensor.read_raw();
-  
+  float voltB = voltageBSensor.read_raw();
+  float voltC = voltageCSensor.read_raw();
+
   out.current[0] = ampsA;
   out.current[1] = ampsB;
   out.current[2] = ampsC;
   out.temp[0] = tempA;
   out.temp[1] = tempB;
   out.volt[0] = voltA;
-  out.volt[1] = voltA;
-  out.volt[2] = voltA;
+  out.volt[1] = voltB;
+  out.volt[2] = voltC;
 
   bridge->send(out);
 
@@ -70,5 +74,5 @@ void loop()
   } else {
     // Serial.println("Recieved Null Pointer");
   }
-  delay(200);
+  delay(500);
 }
